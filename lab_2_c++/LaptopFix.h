@@ -1,6 +1,7 @@
-#pragma once
+п»ї#pragma once
 #include <iostream>
 #include <istream>
+#include <string>
 #include <stdexcept>
 #include <vector>
 
@@ -20,7 +21,8 @@ public:
 	int GetNumOfCores() const;
 	void Input();
 
-	const float maxFreq = 9.0; //условная максимальная тактовая частота для процессора
+	const float maxFreq = 9.0; //СѓСЃР»РѕРІРЅР°СЏ РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ С‚Р°РєС‚РѕРІР°СЏ С‡Р°СЃС‚РѕС‚Р° РґР»СЏ РїСЂРѕС†РµСЃСЃРѕСЂР°
+	const float tryFreq = 0.2; //СѓСЃР»РѕРІРЅРѕРµ РїРѕРІС‹С€РµРЅРёРµ С‡Р°СЃС‚РѕС‚С‹ РґР»СЏ СЂР°Р·РіРѕРЅР°
 private:
 	std::string name;
 	float frequency;
@@ -57,7 +59,7 @@ CPU::CPU(std::string name, float frequency, int numOfCores)
 		this->frequency = frequency;
 		this->numOfCores = numOfCores;
 	}
-	else throw std::invalid_argument("Некорректный формат данных!");
+	else throw std::invalid_argument("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ РґР°РЅРЅС‹С…!");
 }
 
 CPU::~CPU()
@@ -81,18 +83,19 @@ void CPU::Input() {
 	float frequency;
 	int numOfCores;
 
-	std::cout << "Введите название процессора: ";
-	std::cin >> name;
-	std::cout << "Введите его тактовую частоту (в ГГц): ";
+	std::cout << "Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ РїСЂРѕС†РµСЃСЃРѕСЂР°: ";
+	std::getline(std::cin, name);
+	std::cout << "Р’РІРµРґРёС‚Рµ РµРіРѕ С‚Р°РєС‚РѕРІСѓСЋ С‡Р°СЃС‚РѕС‚Сѓ (РІ Р“Р“С†): ";
 	std::cin >> frequency;
-	std::cout << "Введите количество ядер: ";
+	std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЏРґРµСЂ: ";
 	std::cin >> numOfCores;
+	while (getchar() != '\n'); //РѕС‡РёСЃС‚РєР° РІС…РѕРґРЅРѕРіРѕ РїРѕС‚РѕРєР° РїРѕСЃР»Рµ cin
 	if (CheckArguments(name, frequency, numOfCores)) {
 		this->name = name;
 		this->frequency = frequency;
 		this->numOfCores = numOfCores;
 	}
-	else throw std::invalid_argument("Некорректный формат данных!");
+	else throw std::invalid_argument("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ РґР°РЅРЅС‹С…!");
 }
 
 
@@ -124,7 +127,7 @@ void GPU::operator=(GPU other) {
 	this->vram = other.GetVRAM();
 }
 
-bool CheckArguments(std::string name, float frequency, int vram) {
+bool GPU::CheckArguments(std::string name, float frequency, int vram) {
 	return frequency >= 0 && vram >= 0;
 }
 
@@ -146,7 +149,7 @@ GPU::GPU(std::string name, float frequency, int vram)
 		this->frequency = frequency;
 		this->vram = vram;
 	}
-	else throw std::invalid_argument("Некорректный формат данных!");
+	else throw std::invalid_argument("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ РґР°РЅРЅС‹С…!");
 }
 
 GPU::~GPU()
@@ -170,18 +173,19 @@ void GPU::Input() {
 	float frequency;
 	int vram;
 
-	std::cout << "Введите название видеокарты: ";
-	std::cin >> name;
-	std::cout << "Введите тактовую частоту графического процессора (в МГц): ";
+	std::cout << "Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ РІРёРґРµРѕРєР°СЂС‚С‹: ";
+	std::getline(std::cin, name);
+	std::cout << "Р’РІРµРґРёС‚Рµ С‚Р°РєС‚РѕРІСѓСЋ С‡Р°СЃС‚РѕС‚Сѓ РіСЂР°С„РёС‡РµСЃРєРѕРіРѕ РїСЂРѕС†РµСЃСЃРѕСЂР° (РІ РњР“С†): ";
 	std::cin >> frequency;
-	std::cout << "Введите объем видеопамяти (в ГБ): ";
+	std::cout << "Р’РІРµРґРёС‚Рµ РѕР±СЉРµРј РІРёРґРµРѕРїР°РјСЏС‚Рё (РІ Р“Р‘): ";
 	std::cin >> vram;
+	while (getchar() != '\n');
 	if (CheckArguments(name, frequency, vram)) {
 		this->name = name;
 		this->frequency = frequency;
 		this->vram = vram;
 	}
-	else throw std::invalid_argument("Некорректный формат данных!");
+	else throw std::invalid_argument("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ РґР°РЅРЅС‹С…!");
 }
 
 
@@ -253,7 +257,9 @@ public:
 	int GetCapacity() const;
 	void Input();
 
-	const std::vector<int> DDRFreqMax = { 400, 1066, 2400, 3333, 6400 };
+	//РІРµРєС‚РѕСЂ РјР°РєСЃРёРјР°Р»СЊРЅРѕ РІРѕР·РјРѕР¶РЅС‹С… С‡Р°СЃС‚РѕС‚ РґР»СЏ РєР°Р¶РґРѕРіРѕ С‚РёРїР° РїР°РјСЏС‚Рё
+	const std::vector<int> DDRFreqMax = { 400, 1066, 2400, 3333, 6400 }; 
+	const float tryFreq = 50; //СѓСЃР»РѕРІРЅРѕРµ РїРѕРІС‹С€РµРЅРёРµ С‡Р°СЃС‚РѕС‚С‹ РґР»СЏ СЂР°Р·РіРѕРЅР°
 private:
 	std::string name;
 	RAMType type;
@@ -294,7 +300,7 @@ RAM::RAM(std::string name, RAMType type, float frequency, int capacity)
 		this->frequency = frequency;
 		this->capacity = capacity;
 	}
-	else throw std::invalid_argument("Некорректный формат данных!");
+	else throw std::invalid_argument("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ РґР°РЅРЅС‹С…!");
 }
 
 RAM::~RAM()
@@ -323,21 +329,22 @@ void RAM::Input() {
 	float frequency;
 	int capacity;
 
-	std::cout << "Введите название RAM: ";
-	std::cin >> name;
-	std::cout << "Введите тип памяти (DDR - 0, DDR2 - 1, DDR3 - 2, DDR4 - 3, DDR5 - 4): ";
+	std::cout << "Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ RAM: ";
+	std::getline(std::cin, name);
+	std::cout << "Р’РІРµРґРёС‚Рµ С‚РёРї РїР°РјСЏС‚Рё (DDR - 0, DDR2 - 1, DDR3 - 2, DDR4 - 3, DDR5 - 4): ";
 	std::cin >> type;
-	std::cout << "Введите тактовую частоту (в МГц): ";
+	std::cout << "Р’РІРµРґРёС‚Рµ С‚Р°РєС‚РѕРІСѓСЋ С‡Р°СЃС‚РѕС‚Сѓ (РІ РњР“С†): ";
 	std::cin >> frequency;
-	std::cout << "Введите объем (в ГБ): ";
+	std::cout << "Р’РІРµРґРёС‚Рµ РѕР±СЉРµРј (РІ Р“Р‘): ";
 	std::cin >> capacity;
+	while (getchar() != '\n');
 	if (CheckArguments(name, type, frequency, capacity)) {
 		this->name = name;
 		this->type = type;
 		this->frequency = frequency;
 		this->capacity = capacity;
 	}
-	else throw std::invalid_argument("Некорректный формат данных!");
+	else throw std::invalid_argument("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ РґР°РЅРЅС‹С…!");
 }
 
 
@@ -402,12 +409,12 @@ std::string Motherboard::GetChipset() const {
 void Motherboard::Input() {
 	std::string name, socket, chipset;
 
-	std::cout << "Введите название материнской платы: ";
-	std::cin >> name;
-	std::cout << "Введите сокет: ";
-	std::cin >> socket;
-	std::cout << "Введите чипсет: ";
-	std::cin >> chipset;
+	std::cout << "Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ РјР°С‚РµСЂРёРЅСЃРєРѕР№ РїР»Р°С‚С‹: ";
+	std::getline(std::cin, name);
+	std::cout << "Р’РІРµРґРёС‚Рµ СЃРѕРєРµС‚: ";
+	std::getline(std::cin, socket);
+	std::cout << "Р’РІРµРґРёС‚Рµ С‡РёРїСЃРµС‚: ";
+	std::getline(std::cin, chipset);
 	this->name = name;
 	this->socket = socket;
 	this->chipset = chipset;
@@ -461,7 +468,7 @@ Display::Display(int width, int height)
 		this->height = height;
 		refreshRate = 0;
 	}
-	else throw std::invalid_argument("Некорректный формат данных!");
+	else throw std::invalid_argument("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ РґР°РЅРЅС‹С…!");
 }
 
 Display::Display(int width, int height, int refreshRate)
@@ -471,7 +478,7 @@ Display::Display(int width, int height, int refreshRate)
 		this->height = height;
 		this->refreshRate = refreshRate;
 	}
-	else throw std::invalid_argument("Некорректный формат данных!");
+	else throw std::invalid_argument("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ РґР°РЅРЅС‹С…!");
 }
 
 Display::~Display()
@@ -493,16 +500,17 @@ int Display::GetRefreshRate() const {
 void Display::Input() {
 	int width, height, refreshRate;
 
-	std::cout << "Введите ширину и высоту экрана (в пикселях): ";
+	std::cout << "Р’РІРµРґРёС‚Рµ С€РёСЂРёРЅСѓ Рё РІС‹СЃРѕС‚Сѓ СЌРєСЂР°РЅР° (РІ РїРёРєСЃРµР»СЏС…): ";
 	std::cin >> width >> height;
-	std::cout << "Введите частоту обновления экрана (в Гц): ";
+	std::cout << "Р’РІРµРґРёС‚Рµ С‡Р°СЃС‚РѕС‚Сѓ РѕР±РЅРѕРІР»РµРЅРёСЏ СЌРєСЂР°РЅР° (РІ Р“С†): ";
 	std::cin >> refreshRate;
+	while (getchar() != '\n');
 	if (CheckArguments(width, height, refreshRate)) {
 		this->width = width;
 		this->height = height;
 		this->refreshRate = refreshRate;
 	}
-	else throw std::invalid_argument("Некорректный формат данных!");
+	else throw std::invalid_argument("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ РґР°РЅРЅС‹С…!");
 }
 
 
@@ -600,49 +608,50 @@ Display Laptop::GetDisplay() const  {
 }
 
 void Laptop::Input() {
-	std::cout << "Введите название ноутбука: ";
-	std::cin >> name;
-	std::cout << "\tВвод параметров процессора\n";
+	std::cout << "Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ РЅРѕСѓС‚Р±СѓРєР°: ";
+	std::getline(std::cin, name);
+	std::cout << "\tР’РІРѕРґ РїР°СЂР°РјРµС‚СЂРѕРІ РїСЂРѕС†РµСЃСЃРѕСЂР°\n";
 	cpu.Input();
-	std::cout << "\tВвод параметров видеокарты\n";
+	std::cout << "\tР’РІРѕРґ РїР°СЂР°РјРµС‚СЂРѕРІ РІРёРґРµРѕРєР°СЂС‚С‹\n";
 	gpu.Input();
-	std::cout << "\tВвод параметров RAM\n";
+	std::cout << "\tР’РІРѕРґ РїР°СЂР°РјРµС‚СЂРѕРІ RAM\n";
 	ram.Input();
-	std::cout << "\tВвод параметров материнской платы\n";
+	std::cout << "\tР’РІРѕРґ РїР°СЂР°РјРµС‚СЂРѕРІ РјР°С‚РµСЂРёРЅСЃРєРѕР№ РїР»Р°С‚С‹\n";
 	motherboard.Input();
-	std::cout << "\tВвод параметров экрана\n";
+	std::cout << "\tР’РІРѕРґ РїР°СЂР°РјРµС‚СЂРѕРІ СЌРєСЂР°РЅР°\n";
 	display.Input();
 }
 
 void Laptop::BoostCPU() {
-	if (this->cpu.GetFrequency() + 0.2 <= this->cpu.maxFreq) {
-		cpu = CPU(this->cpu.GetName(), this->cpu.GetFrequency() + 0.2, this->cpu.GetNumOfCores());
+	if (this->cpu.GetFrequency() + this->cpu.tryFreq <= this->cpu.maxFreq) {
+		cpu = CPU(this->cpu.GetName(), this->cpu.GetFrequency() + this->cpu.tryFreq, this->cpu.GetNumOfCores());
 	}
 	else if (this->cpu.GetFrequency() < this->cpu.maxFreq) {
 		cpu = CPU(this->cpu.GetName(), this->cpu.maxFreq, this->cpu.GetNumOfCores());
 	}
-	else std::cout << "Разгон CPU больше невозможен!\n";
+	else std::cout << "Р Р°Р·РіРѕРЅ CPU Р±РѕР»СЊС€Рµ РЅРµРІРѕР·РјРѕР¶РµРЅ!\n";
 }
 
 void Laptop::BoostRAM() {
-	if (this->ram.GetFrequency() + 50 <= this->ram.DDRFreqMax[this->ram.GetRAMType()]) {
-		ram = RAM(this->ram.GetName(), this->ram.GetRAMType(), this->ram.GetFrequency() + 50, this->ram.GetCapacity());
+	float maxFreq = this->ram.DDRFreqMax[this->ram.GetRAMType()];
+	if (this->ram.GetFrequency() + this->ram.tryFreq <= maxFreq) {
+		ram = RAM(this->ram.GetName(), this->ram.GetRAMType(), this->ram.GetFrequency() + this->ram.tryFreq, this->ram.GetCapacity());
 	}
-	else if (this->ram.GetFrequency() < this->ram.DDRFreqMax[this->ram.GetRAMType()]) {
-		ram = RAM(this->ram.GetName(), this->ram.GetRAMType(), this->ram.DDRFreqMax[this->ram.GetRAMType()], this->ram.GetCapacity());
+	else if (this->ram.GetFrequency() < maxFreq) {
+		ram = RAM(this->ram.GetName(), this->ram.GetRAMType(), maxFreq, this->ram.GetCapacity());
 	}
-	else std::cout << "Разгон RAM больше невозможен!\n";
+	else std::cout << "Р Р°Р·РіРѕРЅ RAM Р±РѕР»СЊС€Рµ РЅРµРІРѕР·РјРѕР¶РµРЅ!\n";
 }
 
 void Laptop::Print() const {
 	RAMType tempRAMType = this->ram.GetRAMType();
-	std::cout << "\tИнформация о ноутбуке\n";
-	std::cout << "Название модели: " << this->name << "\n";
-	std::cout << "CPU: " << this->cpu.GetName() << ", " << this->cpu.GetFrequency() << " ГГц, " << this->cpu.GetNumOfCores() << "-ядерный\n";
-	std::cout << "GPU: " << this->gpu.GetName() << ", " << this->gpu.GetFrequency() << " МГц, " << this->gpu.GetVRAM() << " ГБ\n";
-	std::cout << "RAM: " << this->ram.GetName() << ", " << tempRAMType << ", " << this->ram.GetCapacity() << " ГБ, " << this->ram.GetFrequency() << " МГц\n";
-	std::cout << "Материнская плата: " << this->motherboard.GetName() << ", " << this->motherboard.GetSocket() << ", " << this->motherboard.GetChipset() << "\n";
-	std::cout << "Экран: " << this->display.GetWidth() << "x" << this->display.GetHeight() << ", "  << this->display.GetRefreshRate() << " Гц\n\n";
+	std::cout << "\tРРЅС„РѕСЂРјР°С†РёСЏ Рѕ РЅРѕСѓС‚Р±СѓРєРµ\n";
+	std::cout << "РќР°Р·РІР°РЅРёРµ РјРѕРґРµР»Рё: " << this->name << "\n";
+	std::cout << "CPU: " << this->cpu.GetName() << ", " << this->cpu.GetFrequency() << " Р“Р“С†, " << this->cpu.GetNumOfCores() << "-СЏРґРµСЂРЅС‹Р№\n";
+	std::cout << "GPU: " << this->gpu.GetName() << ", " << this->gpu.GetFrequency() << " РњР“С†, " << this->gpu.GetVRAM() << " Р“Р‘\n";
+	std::cout << "RAM: " << this->ram.GetName() << ", " << tempRAMType << ", " << this->ram.GetCapacity() << " Р“Р‘, " << this->ram.GetFrequency() << " РњР“С†\n";
+	std::cout << "РњР°С‚РµСЂРёРЅСЃРєР°СЏ РїР»Р°С‚Р°: " << this->motherboard.GetName() << ", " << this->motherboard.GetSocket() << ", " << this->motherboard.GetChipset() << "\n";
+	std::cout << "Р­РєСЂР°РЅ: " << this->display.GetWidth() << "x" << this->display.GetHeight() << ", "  << this->display.GetRefreshRate() << " Р“С†\n\n";
 }
 
 
@@ -672,13 +681,13 @@ std::ostream& operator << (std::ostream& out, StatusType& status) {
 	switch (status)
 	{
 	case ONHOLD:
-		out << "В ожидании";
+		out << "Р’ РѕР¶РёРґР°РЅРёРё";
 		break;
 	case INPROCCESS:
-		out << "В ремонте";
+		out << "Р’ СЂРµРјРѕРЅС‚Рµ";
 		break;
 	case FINISHED:
-		out << "Готов";
+		out << "Р“РѕС‚РѕРІ";
 		break;
 	default:
 		break;
@@ -742,7 +751,7 @@ Order::Order(int num, Laptop laptop, StatusType status)
 		this->laptop = laptop;
 		this->status = status;
 	}
-	else throw std::invalid_argument("Некорректный формат данных!");
+	else throw std::invalid_argument("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ РґР°РЅРЅС‹С…!");
 }
 
 Order::~Order()
@@ -766,32 +775,32 @@ void Order::Input() {
 	Laptop laptop;
 	StatusType status;
 
-	std::cout << "Введите номер заказа: ";
+	std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ Р·Р°РєР°Р·Р°: ";
 	std::cin >> num;
-	std::cout << "Введите статус заказа (0 - в ожидании, 1 - в ремонте, 2 - отремонтирован): ";
+	std::cout << "Р’РІРµРґРёС‚Рµ СЃС‚Р°С‚СѓСЃ Р·Р°РєР°Р·Р° (0 - РІ РѕР¶РёРґР°РЅРёРё, 1 - РІ СЂРµРјРѕРЅС‚Рµ, 2 - РѕС‚СЂРµРјРѕРЅС‚РёСЂРѕРІР°РЅ): ";
 	std::cin >> status;
-	std::cout << "\tВвод параметров ноутбука\n";
+	std::cout << "\tР’РІРѕРґ РїР°СЂР°РјРµС‚СЂРѕРІ РЅРѕСѓС‚Р±СѓРєР°\n";
 	laptop.Input();
 	if (CheckArguments(num, laptop, status)) {
 		this->num = num;
 		this->laptop = laptop;
 		this->status = status;
 	}
-	else throw std::invalid_argument("Некорректный формат данных!");
+	else throw std::invalid_argument("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ РґР°РЅРЅС‹С…!");
 }
 
 void Order::Print() const {
 	StatusType tempStatus = this->status;
-	std::cout << "\tИнформация о заказе\n";
+	std::cout << "\tРРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р·Р°РєР°Р·Рµ\n";
 	std::cout << this->num << ". " << this->laptop.GetName() << "\t" << tempStatus << "\n\n";
 }
 
 void Order::SetStatus(StatusType status) {
 	if (status >= ONHOLD && status <= FINISHED) {
 		this->status = status;
-		std::cout << "Состояние заказа успешно изменено!\n";
+		std::cout << "РЎРѕСЃС‚РѕСЏРЅРёРµ Р·Р°РєР°Р·Р° СѓСЃРїРµС€РЅРѕ РёР·РјРµРЅРµРЅРѕ!\n";
 	}
-	else throw std::invalid_argument("Некорректный формат данных!");
+	else throw std::invalid_argument("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ РґР°РЅРЅС‹С…!");
 }
 
 void Order::SetLaptop(Laptop laptop) {
