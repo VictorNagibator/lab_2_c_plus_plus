@@ -706,7 +706,7 @@ public:
 	void operator=(Order other);
 
 	int GetNum() const;
-	Laptop GetLaptop();
+	Laptop GetLaptop() const;
 	StatusType GetStatus() const;
 	void Input();
 	void Print() const;
@@ -762,7 +762,7 @@ int Order::GetNum() const {
 	return num;
 }
 
-Laptop Order::GetLaptop() {
+Laptop Order::GetLaptop() const {
 	return laptop;
 }
 
