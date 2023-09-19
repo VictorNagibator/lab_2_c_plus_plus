@@ -530,6 +530,11 @@ public:
 	RAM GetRAM() const;
 	Motherboard GetMotherboard() const;
 	Display GetDisplay() const;
+	void SetCPU(CPU cpu);
+	void SetGPU(GPU gpu);
+	void SetRAM(RAM ram);
+	void SetMotherboard(Motherboard motherboard);
+	void SetDisplay(Display display);
 	void Input();
 	void BoostCPU();
 	void BoostRAM();
@@ -605,6 +610,26 @@ Motherboard Laptop::GetMotherboard() const  {
 
 Display Laptop::GetDisplay() const  {
 	return display;
+}
+
+void Laptop::SetCPU(CPU cpu) {
+	this->cpu = cpu;
+}
+
+void Laptop::SetGPU(GPU gpu) {
+	this->gpu = gpu;
+}
+
+void Laptop::SetRAM(RAM ram) {
+	this->ram = ram;
+}
+
+void Laptop::SetMotherboard(Motherboard motherboard) {
+	this->motherboard = motherboard;
+}
+
+void Laptop::SetDisplay(Display display) {
+	this->display = display;
 }
 
 void Laptop::Input() {
